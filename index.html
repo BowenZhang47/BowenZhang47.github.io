@@ -99,7 +99,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/05/31/a/" data-id="clibg6voh0000b8xvdvhqejev" data-title="a" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2023/05/31/a/" data-id="clibgkffb0001m8xva71x1hzy" data-title="a" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -137,7 +137,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/05/31/b/" data-id="clibg6vom0002b8xvhxrvey1q" data-title="a" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2023/05/31/b/" data-id="clibgkffd0002m8xvf1bs68zw" data-title="a" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -415,7 +415,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/05/31/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E5%AE%9E%E6%88%98%E6%8C%87%E5%8D%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="clibg6vok0001b8xvc1f2cakm" data-title="对象存储实战指南学习笔记" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2023/05/31/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E5%AE%9E%E6%88%98%E6%8C%87%E5%8D%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="clibgkffg0004m8xv4poo6ith" data-title="对象存储实战指南学习笔记" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -466,7 +466,424 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/05/31/hello-world/" data-id="clibg6vop0003b8xveqwegtm7" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2023/05/31/hello-world/" data-id="clibgkffg0003m8xv6tcj6pzr" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-RGW对象存储网关学习1：数据组织与存储" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/04/10/RGW%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E7%BD%91%E5%85%B3%E5%AD%A6%E4%B9%A01%EF%BC%9A%E6%95%B0%E6%8D%AE%E7%BB%84%E7%BB%87%E4%B8%8E%E5%AD%98%E5%82%A8/" class="article-date">
+  <time class="dt-published" datetime="2023-04-10T08:43:04.000Z" itemprop="datePublished">2023-04-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/04/10/RGW%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E7%BD%91%E5%85%B3%E5%AD%A6%E4%B9%A01%EF%BC%9A%E6%95%B0%E6%8D%AE%E7%BB%84%E7%BB%87%E4%B8%8E%E5%AD%98%E5%82%A8/">RGW对象存储网关学习1：数据组织与存储</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="本文主要为rgw对象存储网关学习"><a href="#本文主要为rgw对象存储网关学习" class="headerlink" title="本文主要为rgw对象存储网关学习"></a>本文主要为rgw对象存储网关学习</h1><p>RADOS是一个基于对象的存储系统（这里的对象是指RADOS内部的一种数据存储单元，与对象存储中的对象概念有所区别）</p>
+<h2 id="为什么需要RGW"><a href="#为什么需要RGW" class="headerlink" title="为什么需要RGW"></a>为什么需要RGW</h2><p>通常情况下应用通过RAODS抽象库librados提供的对象接口访问RADOS集群，但是librados只提供私有接口，并不支持HTTP协议访问。Ceph为了支持通用的HTTP接口设计了RGW（RADOS GateWay，即对象存储网关）系统。然后，如果RGW只提供通用的HTTP访问接口，应用需要花费较大的代价才能开发出适配RGW访问接口的软件，这不利于Ceph在云存储领域中迅速普及，因此RGW选择适配云存储领域中最广泛的Amazon S3和OpenStack Swift接口，使得现有的S3和Swift用户可以以较小的代价接入到Ceph提供的对象存储系统中。</p>
+<p><strong>RGW实际上是Ceph专门为对象存储应用提供RESTful接口访问RADOS集群的一个访问通道，同时为了方便应用使用，其提供的RESTful接口兼容目前在云存储领域中应用的最广泛的Amazon S3系统和OpenStack Swift系统所提供的对象访问接口。</strong></p>
+<h2 id="对象存储系统的基础数据实体："><a href="#对象存储系统的基础数据实体：" class="headerlink" title="对象存储系统的基础数据实体："></a>对象存储系统的基础数据实体：</h2><ul>
+<li>用户</li>
+<li>桶</li>
+<li>对象</li>
+</ul>
+<hr>
+<h3 id="用户："><a href="#用户：" class="headerlink" title="用户："></a>用户：</h3><p><strong>用户指的是对象存储的使用者，一个用户可以拥有一个或者多个存储桶。<br>一个用户对应一个RADOS对象。</strong></p>
+<p>用户管理设计主要基于以下几个方面考虑：</p>
+<ol>
+<li>为了对RESTful API进行请求认证；</li>
+<li>为了控制用户对资源（存储桶，对象等）的访问权限；</li>
+<li>为了控制用户的可用存储空间。</li>
+</ol>
+<p>因此，一个用户包含的信息包括<strong>用户认证信息，访问控制权限信息和配额信息</strong>。</p>
+<ul>
+<li><p>用户认证信息</p>
+<p>S3用户身份认证机制都是基于密钥认证的。认证过程如下：</p>
+<p>发送请求前，使用用户私有密钥(secret_key)，请求内容等，采用与RGW网关约定好的算法计算出数字签名后，将数字签名以及用户访问密钥(access_key)封装在请求中发送给RGW网关</p>
+</li>
+</ul>
+<p>RGW网关收到请求后，使用用户访问密钥作为索引从RADOS集群中读取用户信息，并从用户信息中获取用户私有密钥<br>使用用户私有密钥，请求内容等，采用与应用约定好的算法计算数字签名<br>判断RGW生成的数字签名和请求的前面是否匹配，匹配则用户通过验证</p>
+<ul>
+<li>访问控制权限信息</li>
+<li>配额信息</li>
+</ul>
+<p>下表为RGWUserInfo数据结构</p>
+<table>
+<thead>
+<tr>
+<th align="left">字段</th>
+<th align="left"></th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>user_id</code></td>
+<td align="left"><code>Tenent </code></td>
+<td align="left">用户所属租户，创建用户时指定，不指定的情况下，所有不指定租户的用户属于同一个租户</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"><code>Id</code></td>
+<td align="left">用户ID，创建用户时指定</td>
+</tr>
+<tr>
+<td align="left"><code>display_name</code></td>
+<td align="left"></td>
+<td align="left">用户名</td>
+</tr>
+<tr>
+<td align="left"><code>user_email</code></td>
+<td align="left"></td>
+<td align="left">用户email地址</td>
+</tr>
+<tr>
+<td align="left"><code>access_keys</code></td>
+<td align="left"><code>Id</code></td>
+<td align="left">用户访问密钥，用户身份认证时使用</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"><code>Key</code></td>
+<td align="left">用户私有密码，用户身份认证时使用</td>
+</tr>
+<tr>
+<td align="left"><code>swift_keys</code></td>
+<td align="left"><code>Subuser</code></td>
+<td align="left">子用户ID，创建子用户时指定</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"><code>Key</code></td>
+<td align="left">子用户私有密钥，即Swift用户私有密钥</td>
+</tr>
+<tr>
+<td align="left"><code>subusers</code></td>
+<td align="left"><code>Name</code></td>
+<td align="left">子用户ID</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"><code>perm_mask</code></td>
+<td align="left">子用户访问权限，包括<code>read、write、readwrite、full-control</code></td>
+</tr>
+<tr>
+<td align="left"><code>Suspended</code></td>
+<td align="left"></td>
+<td align="left">用户被暂停访问</td>
+</tr>
+<tr>
+<td align="left"><code>max_buckets</code></td>
+<td align="left"></td>
+<td align="left">用户可以创建的存储桶数目</td>
+</tr>
+<tr>
+<td align="left"><code>op_mask</code></td>
+<td align="left"></td>
+<td align="left">用户操作访问权限，包括read、write、delete，可设置多个权限的组合，比如{read、write}或{read、write、delete}</td>
+</tr>
+<tr>
+<td align="left"><code>Caps</code></td>
+<td align="left"></td>
+<td align="left">授权用户权限，授权用户根据授予的权限可以进行特殊的操作。<br><code>Caps</code>由一组<code>&lt;caps-type, perm&gt;</code>组成：<br><code>caps-type</code>指的是用户可访问的资源，有效值为：<code>users、buckets、metadata、usage、mdlog、datalog、opstate、bilog</code>；<br><code>perm</code>指的是用户对该资源具有什么权限，有效值为<code>read、write、readwrite、*</code>。<br>比如一个用户的<code>caps</code>设置为“<code>users=read</code>”，表示该用户具有查询其他用户信息的权限</td>
+</tr>
+<tr>
+<td align="left"><code>bucket_quota</code></td>
+<td align="left"><code>max_size</code></td>
+<td align="left">限制单个存储桶下所有对象的总大小</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"><code>max_objects</code></td>
+<td align="left">限制单个存储桶下对象总数目</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"><code>enabled</code></td>
+<td align="left">该字段为布尔类型，值为<code>true</code>时，配额生效</td>
+</tr>
+<tr>
+<td align="left"><code>user_quota</code></td>
+<td align="left"><code>max_size</code></td>
+<td align="left">限制该用户下所有对象的总大小</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"><code>max_objects</code></td>
+<td align="left">限制该用户下对象总数目</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left"><code>enabled</code></td>
+<td align="left">该字段为布尔类型，值为<code>true</code>时，用户配额生效</td>
+</tr>
+</tbody></table>
+<p>RGW将用户信息把保存在RADOS对象的数据部分，一个用户对应一个RADOS对象。由于大部分情况下我们需要使用用户ID作为索引获取用户信息，因此该对象以用户ID命名（RADOS通过‘‘pool名+对象’’来查询一个对象，后面解释pool）。</p>
+<p>RGW需要将访问密钥，子用户，email和用户信息所在的RADOS对象建立索引关系，针对这种情况，RGW采用了二级索引的实现方式。即分别创建以用户访问密钥、子用户、email命名的三个RADOS对象（以下称索引对象），并且将用户ID保存在对象的数据部分。从而当需要使用某个索引查询用户信息时，首先从索引对象读出用户ID，然后使用用户ID作为索引读取用户信息。</p>
+<hr>
+<h3 id="桶"><a href="#桶" class="headerlink" title="桶:"></a>桶:</h3><p><strong>存储桶是对象的容器。一个存储桶对应一个RADOS对象。</strong></p>
+<p>一个存储桶包含的信息分为两类：</p>
+<ol>
+<li>一类是对象RGW网关透明的信息，这类信息通常指用户自定义的元数据，RGW将这些信息保存在对象的扩展信息中，一个KV键值对对应一个扩展属性条目；</li>
+<li>一类是RGW网关关注的信息，包括存储桶中对象的存储策略，存储桶中索引对象的数目以及应用对象与索引对象的映射关系、存储桶的配额等，这类信息由数据结构RGWBucketInfo管理，保存在RADOS对象的数据部分。</li>
+</ol>
+<p>下表为<code>RGWBucketInfo</code>关键字段</p>
+<table>
+<thead>
+<tr>
+<th align="left">成员</th>
+<th align="left"></th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>owner</code></td>
+<td align="left"></td>
+<td align="left">存储桶的创建者或拥有者</td>
+</tr>
+<tr>
+<td align="left"><code>placement_rule</code></td>
+<td align="left"></td>
+<td align="left">存储桶中的对象的存储策略，存储策略关联用户上传的对象、bucket索引对象、分段上传对象产生的中间数据存放的存储池。存储池的存储策略在创建存储桶时指定，创建后将不能修改</td>
+</tr>
+<tr>
+<td align="left"><code>index_type</code></td>
+<td align="left">0</td>
+<td align="left">当创建一个桶时，同时创建一个或多个存储对象，并且在有应用对象更新时，将对象记录在其中一个索引对象中</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">1</td>
+<td align="left">当创建一个桶时，同时创建一个或多个存储对象，但是在有应用对象更新时，不记录对象</td>
+</tr>
+<tr>
+<td align="left"><code>num_shards</code></td>
+<td align="left"></td>
+<td align="left">索引对象数目</td>
+</tr>
+<tr>
+<td align="left"><code>quota</code></td>
+<td align="left"></td>
+<td align="left">存储桶配额</td>
+</tr>
+<tr>
+<td align="left"><code>bucket_index_shard_hash_type</code></td>
+<td align="left"></td>
+<td align="left">当一个存储桶对应多个索引对象时，计算某个对象由哪个索引对象保存的算法，目前只支持一种算法：<br><code>索引对象=hash(object_name)%num_shards</code></td>
+</tr>
+</tbody></table>
+<p>创建存储桶时，RGW网关会同步创建一个或多个索引对象，用于保存改存储桶下的对象列表，以支持查询存储桶对象列表(<code>List Bucket</code>)功能，因此在存储桶中有新的对象上传或者删除时必须更新索引对象。</p>
+<p>RGW采用了Ceph通常采用的解决方案，将索引对象分片(<code>shard</code>)，把一个索引对象切分成多个对象，不同应用对象记录在不同的索引对象上。</p>
+<p>这个方案极大的改观了对象的写性能，但是分片后带来的一个负面影响，会影响查询桶对象列表操作的性能。分片后原先只需要读一个索引对象就可以获取存储桶下对象列表变成了针对多个索引对象的读，这时，RGW网关与RADOS集群间的网络延时，多个索引对象查询结果的合并对查询存储桶对象列表性能产生很大的影响。</p>
+<p>为了降低这个负面影响，RGW视图对多个索引对象并发读取代串行读，以降低查询存储桶对象列表操作的处理时间。但事物都有两面性，如果一味的增加索引对象的数目，与此同时归并排序所消耗的计算量和缓存也会增加，从而也制约了查询效率。</p>
+<hr>
+<h3 id="对象："><a href="#对象：" class="headerlink" title="对象："></a>对象：</h3><p><strong>对象是对象存储系统数据组织和存储的基本单位，一个对象包含数据和元数据。数据指的是用户保存的真正的数据，比如一个文本文件的内容或者一个视频文件的内容；元数据指的是除了数据外的其他需要保存的信息，一般由KV键值对组成。（类似于创建桶时的两类信息）</strong></p>
+<p>与文件系统层级管理结构不同，对象存储系统中所有对象都以扁平方式存储，对象之间没有直接关联，这种特性很容易实现将不同的对象保存在不同的物理位置。此外，对象存储不提供编辑对象部分内容的功能，对象必须作为一个整体单元操作，即使只更新对象中的一个字符，也必须将整个对象从云端下载下来，更新后上传。</p>
+<p>应用上传的对象包括数据和元数据两部分，数据部分保存在一个或者多个RADOS对象的数据部分，元素据保存在其中一个RADOS对象的扩展属性中。（为什么是一个或多个呢？因为前面提到的分片）</p>
+<p>RGW对于单个对象提供了两种上传接口：整体上传和分段上传</p>
+<ul>
+<li><p>整体上传：</p>
+<p>RGW限制了整体上传一个对象器大小不能大于5GB，当用户上传的对象大于该限制时必须分段上传，否则上传对象失败。为了更好理解用户上传对象和RADOS对象的对应关系，先了解两个值和一个类：</p>
+<p><code>rgw_max_chunk_size</code>：该宏值用来表示RGW下发到RADOS集群单个I&#x2F;O的大小，同时决定应用对象分成多个RADOS对象时首对象的大小，以下简称分块大小</p>
+<p><code>rgw_obj_stripe_size</code>：公司宏值用来指定当一个对象被分成多个RADOS对象时中间对象的大小，以下简称条带大小</p>
+<p><code>Class RGWWObjManifest</code>：用来管理用户上传的对象和RADOS对象的对应关系，以下简称manifest</p>
+<p>整体上传时，</p>
+<ul>
+<li>当对象小于分块时，用户上传的一个对象只对应一个RADOS对象，该RADOS对象以应用对象名称命名，对象元数据也保存在该RADOS对象的扩展属性中；</li>
+<li>当用户上传的对象大于分块时，被分解成一个大小等于分块大小的首对象，多个大小等于条带大小的中间对象，和一个大小小于条带大小的尾对象。</li>
+</ul>
+</li>
+<li><p>分段上传：</p>
+<p>分段上传对象时，RGW网关按照条带大小将每个分段分成多个RADOS对象。当所有的分段上传结束以后，RGW会另外生成一个RADOS对象，用于保存应用对象元数据和所有分段的manifest。</p>
+</li>
+</ul>
+<hr>
+<h2 id="数据存储位置"><a href="#数据存储位置" class="headerlink" title="数据存储位置"></a>数据存储位置</h2><p>前面分析了RGW数据的组织和存储方式，不同的用户数据最终以RADOS对象为单位保存到了RADOS集群中。为了实现不同的应用数据存储位置的隔离，RGW使用zone来管理用户数据的存储位置，zone由一组存储池(pool)组成，不同存储池用来保存不同的数据，RGW使用数据结构<code>RGWZoneParams</code>来管理不同的存储池。因此配置一个RGW实例时，需要指定该RGW实例所属的zone以及确定数据的存储位置。</p>
+<p>下表为<code>RGWZoneParams</code>关键字段</p>
+<table>
+<thead>
+<tr>
+<th align="left">字段</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>domain_root</code></td>
+<td align="left">该存储池用来存储存储桶的信息</td>
+</tr>
+<tr>
+<td align="left"><code>metadata_heap</code></td>
+<td align="left">该存储池用来存储存储桶的信息和用户信息，可不配置</td>
+</tr>
+<tr>
+<td align="left"><code>control_pool</code></td>
+<td align="left">RGW实例上电时，在该存储池中创建若干个对象用于watch-notify，主要作用为当一个zone包含多个RGW实例启动了缓存功能时，保证所有RGW实例间数据一致性，其基本原理为利用librados提供的对象watch-notify功能，当有数据更新时，通知其他RGW实例更新本地缓存</td>
+</tr>
+<tr>
+<td align="left"><code>gc_pool</code></td>
+<td align="left">RGW实例上电时，在该存储池中创建多个对象，用于记录在后台删除的对象。RGW实例会定期启动gc线程，删除记录的对象</td>
+</tr>
+<tr>
+<td align="left"><code>lc_pool</code></td>
+<td align="left">S3 API支持对象生命周期（对象生命周期过后，系统会自动删除对象）功能，该存储池用来记录对象生命周期的执行状态</td>
+</tr>
+<tr>
+<td align="left"><code>log_pool</code></td>
+<td align="left">该存储池用来存储用户操作日志、数据同步日志等</td>
+</tr>
+<tr>
+<td align="left"><code>usage_log_pool</code></td>
+<td align="left">该存储池用来存储用户操作统计信息，比如对象上传次数、下载次数等</td>
+</tr>
+<tr>
+<td align="left"><code>user_keys_pool</code></td>
+<td align="left">该存储池用来存储用户访问密钥与用户ID的关系</td>
+</tr>
+<tr>
+<td align="left"><code>user_email_pool</code></td>
+<td align="left">该存储池用来存储用户email与用户ID的关系</td>
+</tr>
+<tr>
+<td align="left"><code>user_swift_pool</code></td>
+<td align="left">该存储池用来存储子用户与用户ID的关系</td>
+</tr>
+<tr>
+<td align="left"><code>user_uid_pool</code></td>
+<td align="left">该存储池用来存储用户信息和记录每个用户下存储列表信息</td>
+</tr>
+<tr>
+<td align="left"><code>placement_pool</code></td>
+<td align="left">应用对象的存储位置</td>
+</tr>
+</tbody></table>
+<p>需要重点强调的是placement_pools字段。该字段由<code>map&lt;string,RGWZonePlacementInfo&gt;</code>组成，<code>string</code>是一个自定义字符串，可以认为是一个对象存储策略，用来唯一定位第二个字段<code>RGWZonePlacementInfo</code>。第二个字段主要定义应用对象的存储位置、用户分段上传对象时的中间数据的存储位置和存储索引对象的存储位置等。当创建一个存储桶时，用户可以显式指定zone中已存在的存储策略，后续往存储桶中上传对象时，将按照该存储策略存储对象。</p>
+<p>下表为<code>RGWZonePlacementInfo</code>关键字段</p>
+<table>
+<thead>
+<tr>
+<th align="left">字段</th>
+<th align="left"></th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>index_pool</code></td>
+<td align="left"></td>
+<td align="left">该存储池用来保存存储同的索引对象</td>
+</tr>
+<tr>
+<td align="left"><code>data_pool</code></td>
+<td align="left"></td>
+<td align="left">该存储池用来保存应用上传的对象</td>
+</tr>
+<tr>
+<td align="left"><code>data_extra_pool</code></td>
+<td align="left"></td>
+<td align="left">该存储池用来保存分段上传对象所产生的中间数据</td>
+</tr>
+<tr>
+<td align="left"><code>index_type</code></td>
+<td align="left">0</td>
+<td align="left">该存储策略下将存储桶下对象记录在索引对象中</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">1</td>
+<td align="left">该存储策略下不记录存储桶下对象列表</td>
+</tr>
+<tr>
+<td align="left"><code>compression_type</code></td>
+<td align="left"></td>
+<td align="left">当启动数据压缩时，指定压缩算法</td>
+</tr>
+</tbody></table>
+<p>RGW数据分布 Conceptual view<br>“Although RADOS only knows about pools and objects with their xattrs and omap, conceptually RGW organizes its data into three defferent kinds: <strong>metadata</strong>, <strong>bucket index</strong>, and <strong>data</strong>.”<br>RGW 将其数据组织为三种不同的类型：元数据、存储桶索引和数据</p>
+<h2 id="Metadata"><a href="#Metadata" class="headerlink" title="Metadata"></a>Metadata</h2><p>有三部分元数据：user，bucket，bucket.instance</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ radosgw-admin metadata list</span><br><span class="line">$ radosgw-admin metadata list bucket</span><br><span class="line">$ radosgw-admin metadata list bucket.instance</span><br><span class="line">$ radosgw-admin metadata list user</span><br><span class="line"></span><br><span class="line">$ radosgw-admin metadata get bucket:&lt;bucket&gt;</span><br><span class="line">$ radosgw-admin metadata get bucket.instance:&lt;bucket&gt;:&lt;bucket_id&gt;</span><br><span class="line">$ radosgw-admin metadata get user:&lt;user&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>bucket对应内部的类型是RGWBucketEntryPoint，其只保存的bucket概要信息。<br>bucket instance对应内部的数据类型是RGWBucketInfo，其保存的是bucket的详细信息。<br>user对应内部的RGWUserInfo，保存user的详细信息</p>
+<h3 id="user元数据"><a href="#user元数据" class="headerlink" title="user元数据"></a>user元数据</h3><p>通过下面的命令可以查看某个用户的元信息，包括：id，name，key，quota等信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$radosgw-admin metadata user get user:&#123;user&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在逻辑上，user信息存储在{zone}.rgw.meta池的users:*命名空间中，如下：</p>
+<ol>
+<li>users.uid：存储用户id及其bucket信息</li>
+<li>users.keys：存储用户的access key信息，通过它可以找到用户id</li>
+<li>users.email：存储用户的email信息</li>
+<li>users.swfit：存储swfit子用户信息</li>
+</ol>
+<p>其中用户的基本信息（<code>id，key，email，subuser</code>等）包含在结构<code>RGWUserInfo</code>中，用户的bucket信息包含在结构<code>cls_user_bucket_entry</code>中，还有其他结构也包含在<code>cls_user_types.h</code>文件中，详情可以参考源码，物理上，这些信息都存储在存储池映射的OSD磁盘上；下面是一个示例：</p>
+<h3 id="users-uid命名空间"><a href="#users-uid命名空间" class="headerlink" title="users.uid命名空间"></a>users.uid命名空间</h3><ol>
+<li><p>包含user和user.buckets两个对象，其中user包含用户的基本信息，user.buckets包含用户的bucket信息。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$rados ls -p &#123;zone&#125;.rgw.meta --namespace=users.uid</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>user对象本身包含了用户的基本信息，基本上与用户相关的描述信息都包含在里面，只有一个扩展属性，没有omap属性。</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$rados listxattr -p &#123;zone&#125;.rgw.meta --namespace=users.uid &#123;user&#125;</span><br><span class="line">$rados listomapkeys -p &#123;zone&#125;.rgw.meta --namespace=users.uid &#123;user&#125;</span><br><span class="line">$rados getxattr -p &#123;zone&#125;.rgw.meta --namespace=users.uid &#123;user&#125; &#123;key&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>user.buckets本身不包含信息，信息包含在omap属性中，没有扩展属性；用户在list bucket的时候会用到这个信息。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$rados listomapkeys -p &#123;zone&#125;.rgw.meta --namespace=users.uid &#123;user&#125;.buckets</span><br><span class="line"></span><br><span class="line">$rados getomapval -p &#123;zone&#125;.rgw.meta --namespace=users.uid &#123;user&#125;.buckets &#123;key&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="users-keys命名空间"><a href="#users-keys命名空间" class="headerlink" title="users.keys命名空间"></a>users.keys命名空间</h3><ul>
+<li>包含了key到uid映射信息，可以通过access key找到uid。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li>由于没有设置email和swift用户，所以users.email和users.swift空间没有记录相应的信息。<br>通过radosgw-admin user命令获取的所有信息都来至于上述的命名空间，各个命令的工作过程在这里就不相信分析了（掌握各操作的IO路径也是实现元数据分布式集群很重要的一部分，留待后面分析吧）</li>
+</ul>
+<h3 id="bucket元数据"><a href="#bucket元数据" class="headerlink" title="bucket元数据"></a>bucket元数据</h3><p>通过下面的命令可以查看某个桶的元信息，包含：name，key，marker等信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$radosgw-admin metadata bucket get bucket:&#123;bucket&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在逻辑上，<code>bucket</code>信息存储在<code>&#123;zone&#125;.rgw.meta</code>池的<code>root</code>命名空间中，其中<code>&#123;bucket&#125;</code> 记录了bucket与<code>instance_id</code>的对应关系，记录是的静态信息，对应于结构<code>RGWBucketEntryPoint</code>，<code>.bucket.meta.&#123;tenent&#125;：&#123;bucket&#125;:&#123;marker&#125; </code>记录bucket的寻址方式，记录的是动态信息，对应于结构RGWBucketInfo，bucket的ACL，Policy信息存放在xattr属性中，物理上，这些信息都存储在存储池映射的OSD磁盘上, 下面是一个示例：<br>1）包含bucket1和.bucket.meta.bucket1:475c3d39-2f37-4ffd-ab72-fecc7272339c.34580.1两个对象</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rados ls master.rgw.meta --namespace=root all</span><br></pre></td></tr></table></figure>
+<p>2）bucket1对象本身包含了用户的基本信息，基本上与用户相关的描述信息都包含在里面，只有一个扩展属性，没有omap属性。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$rados listxattr -p &#123;zone&#125;.rgw.meta --namespace=root &#123;bucket&#125;</span><br><span class="line">$rados listomapkeys -p &#123;zone&#125;.rgw.meta --namespace=root &#123;bucket&#125;</span><br><span class="line">$rados getxattr -p &#123;zone&#125;.rgw.meta --namespace=root &#123;bucket&#125; &#123;key&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3）.bucket.meta.bucket1:475c3d39-2f37-4ffd-ab72-fecc7272339c.34580.1对象的扩展属性中包含acl，policy等信息，对象本身包含bucket的动态信息。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$rados listxattr -p &#123;zone&#125;.rgw.meta --namespace=root .bucket.meta.&#123;tenent&#125;:&#123;bucket&#125;:&#123;marker&#125;</span><br><span class="line">ceph.obeclass.version</span><br><span class="line">user.rgw.acl</span><br><span class="line">$rados getxattr -p &#123;zone&#125;.rgw.meta --namespace=root .bucket.meta.&#123;tenent&#125;:&#123;bucket&#125;:&#123;marker&#125; user.rgw.acl</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rados get -p &#123;zone&#125;.rgw.meta --namespace=root .bucket.meta.&#123;tenent&#125;:&#123;bucket&#125;:&#123;marker&#125; </span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Bucket-Index"><a href="#Bucket-Index" class="headerlink" title="Bucket Index"></a>Bucket Index</h3><ul>
+<li>一种特殊的元数据，单独保存。</li>
+<li>bucket_index保存rados对象间的key-value map。</li>
+<li>map信息保存在rados对象的omap属性中。</li>
+</ul>
+<p>通过下面的命令可以枚举bucket下的对象信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">radosgw-admin bucket list --bucket=&#123;bucket&#125;</span><br></pre></td></tr></table></figure>
+<p>在逻辑上，bucket index信息存储在<code>&#123;zone&#125;.rgw.buckets.index</code>池中，bucket index用于维护bucket下的对象信息，存储在一个或者多个对象的omap中 - key为对象的名字，value为结构<code>rgw_bucket_dir_entry</code>。bucket index对象的命名为：<code>.dir.&#123;bucket_id&#125;.&#123;shard_id&#125;</code>。下面是一个示例：<br>1）omap keys：bucket index对象中包含的object key列表。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rados listomapkeys -p &#123;zone&#125;.rgw.buckets.index .dir.&#123;bucket_id&#125;.&#123;shard_id&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2）omap value: 某个object的信息，对应结构<code>rgw_bucket_dir_entry</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$rados getomapval -p &#123;zone&#125;.rgw.buckets.index .dir.&#123;bucket_id&#125;.&#123;shard_id&#125; &#123;key&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3）omap header： 当前bucket index对象下的统计信息，对象数，总大小等。对应结构<code>rgw_bucket_dir_header</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$rados getomapheader -p &#123;zone&#125;.rgw.bucket.index .dir.&#123;bucket_id&#125;.&#123;shard_id&#125; &#123;key&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Data："><a href="#Data：" class="headerlink" title="Data："></a>Data：</h2><p>对象存储Object的数据存储在：<code>&#123;zone&#125;.rgw.buckets.data</code>池中。一个rgw对象包含一个或者多个rados对象.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/04/10/RGW%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E7%BD%91%E5%85%B3%E5%AD%A6%E4%B9%A01%EF%BC%9A%E6%95%B0%E6%8D%AE%E7%BB%84%E7%BB%87%E4%B8%8E%E5%AD%98%E5%82%A8/" data-id="clibgkff80000m8xv65040h9y" data-title="RGW对象存储网关学习1：数据组织与存储" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -496,7 +913,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">May 2023</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">May 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">April 2023</a></li></ul>
     </div>
   </div>
 
@@ -522,6 +939,10 @@
         
           <li>
             <a href="/2023/05/31/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/10/RGW%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E7%BD%91%E5%85%B3%E5%AD%A6%E4%B9%A01%EF%BC%9A%E6%95%B0%E6%8D%AE%E7%BB%84%E7%BB%87%E4%B8%8E%E5%AD%98%E5%82%A8/">RGW对象存储网关学习1：数据组织与存储</a>
           </li>
         
       </ul>
