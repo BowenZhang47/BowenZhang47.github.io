@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Bowen&#39;s blog">
 <meta property="og:description" content="学习笔记1.对象存储概述1.1 存储技术对比：   维度 块存储 文件存储 对象存储    适用范围（网络边界） 数据中心内 数据中心内 互联网、移动互联网（3G&#x2F;4G&#x2F;5G）数据中心内   使用者（用户） 机器 办公帐号（AD&#x2F;LDAP）机器 云账号、社交帐号兼容办公帐号机器   访问协议&#x2F;接口 快协议（ATA&#x2F;SCSI） 文件协议（NFS&amp;#x">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E5%AE%9E%E6%88%98%E6%8C%87%E5%8D%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%A4%8D%E5%88%B6%E4%B8%8E%E5%85%B1%E8%AF%86.jpg">
+<meta property="og:image" content="http://example.com/2023/05/31/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E5%AE%9E%E6%88%98%E6%8C%87%E5%8D%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%A4%8D%E5%88%B6%E4%B8%8E%E5%85%B1%E8%AF%86.jpg">
 <meta property="og:image" content="http://example.com/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E5%AE%9E%E6%88%98%E6%8C%87%E5%8D%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%91%BD%E5%90%8D%E5%92%8C%E5%90%8C%E6%AD%A5.png">
 <meta property="og:image" content="http://example.com/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E5%AE%9E%E6%88%98%E6%8C%87%E5%8D%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%AE%B9%E9%94%99.png">
 <meta property="og:image" content="http://example.com/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E5%AE%9E%E6%88%98%E6%8C%87%E5%8D%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7.png">
@@ -23,10 +23,10 @@
 <meta property="og:image" content="http://example.com/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E5%AE%9E%E6%88%98%E6%8C%87%E5%8D%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4.png">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/28940386-8461f3bae91ec49c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="article:published_time" content="2023-05-31T06:29:36.000Z">
-<meta property="article:modified_time" content="2023-05-31T09:17:51.675Z">
+<meta property="article:modified_time" content="2023-05-31T09:35:30.864Z">
 <meta property="article:author" content="Bowen Zhang">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E5%AE%9E%E6%88%98%E6%8C%87%E5%8D%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%A4%8D%E5%88%B6%E4%B8%8E%E5%85%B1%E8%AF%86.jpg">
+<meta name="twitter:image" content="http://example.com/2023/05/31/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E5%AE%9E%E6%88%98%E6%8C%87%E5%8D%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%A4%8D%E5%88%B6%E4%B8%8E%E5%85%B1%E8%AF%86.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Bowen's blog" type="application/atom+xml">
   
@@ -151,7 +151,7 @@
 <h3 id="1-2-存储技术架构"><a href="#1-2-存储技术架构" class="headerlink" title="1.2 存储技术架构"></a>1.2 存储技术架构</h3><h4 id="存储区域网络（SAN-Storage-Area-Network）–块存储"><a href="#存储区域网络（SAN-Storage-Area-Network）–块存储" class="headerlink" title="存储区域网络（SAN Storage Area Network）–块存储"></a>存储区域网络（SAN Storage Area Network）–块存储</h4><h4 id="网络附加存储（NAS-Network-Attached-Storage）–文件存储"><a href="#网络附加存储（NAS-Network-Attached-Storage）–文件存储" class="headerlink" title="网络附加存储（NAS Network Attached Storage）–文件存储"></a>网络附加存储（NAS Network Attached Storage）–文件存储</h4><h4 id="对象存储架构（Object-Storage）"><a href="#对象存储架构（Object-Storage）" class="headerlink" title="对象存储架构（Object Storage）"></a>对象存储架构（Object Storage）</h4><h3 id="1-3-公共云对象存储服务"><a href="#1-3-公共云对象存储服务" class="headerlink" title="1.3 公共云对象存储服务"></a>1.3 公共云对象存储服务</h3><h4 id="1-3-1-架构"><a href="#1-3-1-架构" class="headerlink" title="1.3.1 架构"></a>1.3.1 架构</h4><h5 id="3层架构（基于分布式文件系统构建）"><a href="#3层架构（基于分布式文件系统构建）" class="headerlink" title="3层架构（基于分布式文件系统构建）"></a>3层架构（基于分布式文件系统构建）</h5><p>逻辑视图（从下到上）：分布式文件系统（HDFS）、索引元数据（分布式键值存储，如HBASE）、对象服务功能 —–Google Cloud Storage、Aliyun OSS</p>
 <h5 id="2层架构（基于本地键值存储构建）"><a href="#2层架构（基于本地键值存储构建）" class="headerlink" title="2层架构（基于本地键值存储构建）"></a>2层架构（基于本地键值存储构建）</h5><p>逻辑视图（从下到上）：分布式键值存储、对象服务功能 —-Ceph</p>
 <h4 id="1-3-2-关键能力"><a href="#1-3-2-关键能力" class="headerlink" title="1.3.2 关键能力"></a>1.3.2 关键能力</h4><p>按优先级从高到底：<br><strong>安全性：数据加密</strong><br><strong>高可靠：协调和复制，容错和数据完整性</strong><br><strong>高可用：数据保护</strong><br><strong>扩展性：命名和同步</strong>，<strong>元数据索引设计</strong>，<strong>数据迁移</strong><br><strong>性价比：数据生命周期</strong></p>
-<h2 id="2-协调（Coordination）和复制（Replication）"><a href="#2-协调（Coordination）和复制（Replication）" class="headerlink" title="2.协调（Coordination）和复制（Replication）"></a>2.协调（Coordination）和复制（Replication）</h2><p><img src="/./%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E5%AE%9E%E6%88%98%E6%8C%87%E5%8D%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%A4%8D%E5%88%B6%E4%B8%8E%E5%85%B1%E8%AF%86.jpg" alt="共识和复制对比"></p>
+<h2 id="2-协调（Coordination）和复制（Replication）"><a href="#2-协调（Coordination）和复制（Replication）" class="headerlink" title="2.协调（Coordination）和复制（Replication）"></a>2.协调（Coordination）和复制（Replication）</h2><p><img src="/2023/05/31/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E5%AE%9E%E6%88%98%E6%8C%87%E5%8D%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%A4%8D%E5%88%B6%E4%B8%8E%E5%85%B1%E8%AF%86.jpg" alt="共识和复制对比"></p>
 <p>在分布式系统中通过协调达成共识是普遍需求，部署在多台服务器间的进程都需要通信协调将关键数据达成一致。两将军首次提出不可靠网络的共识问题，然后演化为存在拜占庭故障的拜占庭将军问题，通过对问题的分析提出原子广播解决方案（Atomic Broadcast，ABCAST），鉴于原子广播无法支撑数据持久化能力，业界提出改进优化的视图复制（Viewstamped Replication，<strong>VR</strong>）和<strong>PAXOS</strong>，鉴于PAXOS的理论复杂度，业界又提出RAFT，它将PAXOS用更简单的方式描述，同时参考VR的工程实现优化。</p>
 <p>共识技术要支持数据持久化能力会用到日志复制技术，而分布式存储系统需要做数据冗余也需要实现数据复制。</p>
 <h3 id="2-1-协调"><a href="#2-1-协调" class="headerlink" title="2.1 协调"></a>2.1 协调</h3><p>两将军问题，采用固定次数的消息确认，解决通信网络不可靠时的共识问题。—-TCP&#x2F;IP三次握手<br>拜占庭将军问题，两种解决。1）根据分布式系统的服务器总数，限定发生拜占庭故障的服务器数。2）根据数字签名识别伪装的服务器，或根据序列号识别亚健康服务器的错误消息</p>
@@ -351,7 +351,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/05/31/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E5%AE%9E%E6%88%98%E6%8C%87%E5%8D%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="clibiaczn0001p0xvdst07qyq" data-title="对象存储实战指南学习笔记" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2023/05/31/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E5%AE%9E%E6%88%98%E6%8C%87%E5%8D%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="clibiiay60001tcxv11ivg7o7" data-title="对象存储实战指南学习笔记" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       

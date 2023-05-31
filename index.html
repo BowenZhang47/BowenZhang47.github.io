@@ -139,7 +139,7 @@
 <h3 id="1-2-存储技术架构"><a href="#1-2-存储技术架构" class="headerlink" title="1.2 存储技术架构"></a>1.2 存储技术架构</h3><h4 id="存储区域网络（SAN-Storage-Area-Network）–块存储"><a href="#存储区域网络（SAN-Storage-Area-Network）–块存储" class="headerlink" title="存储区域网络（SAN Storage Area Network）–块存储"></a>存储区域网络（SAN Storage Area Network）–块存储</h4><h4 id="网络附加存储（NAS-Network-Attached-Storage）–文件存储"><a href="#网络附加存储（NAS-Network-Attached-Storage）–文件存储" class="headerlink" title="网络附加存储（NAS Network Attached Storage）–文件存储"></a>网络附加存储（NAS Network Attached Storage）–文件存储</h4><h4 id="对象存储架构（Object-Storage）"><a href="#对象存储架构（Object-Storage）" class="headerlink" title="对象存储架构（Object Storage）"></a>对象存储架构（Object Storage）</h4><h3 id="1-3-公共云对象存储服务"><a href="#1-3-公共云对象存储服务" class="headerlink" title="1.3 公共云对象存储服务"></a>1.3 公共云对象存储服务</h3><h4 id="1-3-1-架构"><a href="#1-3-1-架构" class="headerlink" title="1.3.1 架构"></a>1.3.1 架构</h4><h5 id="3层架构（基于分布式文件系统构建）"><a href="#3层架构（基于分布式文件系统构建）" class="headerlink" title="3层架构（基于分布式文件系统构建）"></a>3层架构（基于分布式文件系统构建）</h5><p>逻辑视图（从下到上）：分布式文件系统（HDFS）、索引元数据（分布式键值存储，如HBASE）、对象服务功能 —–Google Cloud Storage、Aliyun OSS</p>
 <h5 id="2层架构（基于本地键值存储构建）"><a href="#2层架构（基于本地键值存储构建）" class="headerlink" title="2层架构（基于本地键值存储构建）"></a>2层架构（基于本地键值存储构建）</h5><p>逻辑视图（从下到上）：分布式键值存储、对象服务功能 —-Ceph</p>
 <h4 id="1-3-2-关键能力"><a href="#1-3-2-关键能力" class="headerlink" title="1.3.2 关键能力"></a>1.3.2 关键能力</h4><p>按优先级从高到底：<br><strong>安全性：数据加密</strong><br><strong>高可靠：协调和复制，容错和数据完整性</strong><br><strong>高可用：数据保护</strong><br><strong>扩展性：命名和同步</strong>，<strong>元数据索引设计</strong>，<strong>数据迁移</strong><br><strong>性价比：数据生命周期</strong></p>
-<h2 id="2-协调（Coordination）和复制（Replication）"><a href="#2-协调（Coordination）和复制（Replication）" class="headerlink" title="2.协调（Coordination）和复制（Replication）"></a>2.协调（Coordination）和复制（Replication）</h2><p><img src="/./%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E5%AE%9E%E6%88%98%E6%8C%87%E5%8D%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%A4%8D%E5%88%B6%E4%B8%8E%E5%85%B1%E8%AF%86.jpg" alt="共识和复制对比"></p>
+<h2 id="2-协调（Coordination）和复制（Replication）"><a href="#2-协调（Coordination）和复制（Replication）" class="headerlink" title="2.协调（Coordination）和复制（Replication）"></a>2.协调（Coordination）和复制（Replication）</h2><p><img src="/2023/05/31/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E5%AE%9E%E6%88%98%E6%8C%87%E5%8D%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%A4%8D%E5%88%B6%E4%B8%8E%E5%85%B1%E8%AF%86.jpg" alt="共识和复制对比"></p>
 <p>在分布式系统中通过协调达成共识是普遍需求，部署在多台服务器间的进程都需要通信协调将关键数据达成一致。两将军首次提出不可靠网络的共识问题，然后演化为存在拜占庭故障的拜占庭将军问题，通过对问题的分析提出原子广播解决方案（Atomic Broadcast，ABCAST），鉴于原子广播无法支撑数据持久化能力，业界提出改进优化的视图复制（Viewstamped Replication，<strong>VR</strong>）和<strong>PAXOS</strong>，鉴于PAXOS的理论复杂度，业界又提出RAFT，它将PAXOS用更简单的方式描述，同时参考VR的工程实现优化。</p>
 <p>共识技术要支持数据持久化能力会用到日志复制技术，而分布式存储系统需要做数据冗余也需要实现数据复制。</p>
 <h3 id="2-1-协调"><a href="#2-1-协调" class="headerlink" title="2.1 协调"></a>2.1 协调</h3><p>两将军问题，采用固定次数的消息确认，解决通信网络不可靠时的共识问题。—-TCP&#x2F;IP三次握手<br>拜占庭将军问题，两种解决。1）根据分布式系统的服务器总数，限定发生拜占庭故障的服务器数。2）根据数字签名识别伪装的服务器，或根据序列号识别亚健康服务器的错误消息</p>
@@ -339,7 +339,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/05/31/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E5%AE%9E%E6%88%98%E6%8C%87%E5%8D%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="clibiaczn0001p0xvdst07qyq" data-title="对象存储实战指南学习笔记" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2023/05/31/%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E5%AE%9E%E6%88%98%E6%8C%87%E5%8D%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="clibiiay60001tcxv11ivg7o7" data-title="对象存储实战指南学习笔记" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -752,12 +752,12 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$rados getomapheader -p &#123;zone&#125;.rgw.bucket.index .dir.&#123;bucket_id&#125;.&#123;shard_id&#125; &#123;key&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="Data："><a href="#Data：" class="headerlink" title="Data："></a>Data：</h2><p>对象存储Object的数据存储在：<code>&#123;zone&#125;.rgw.buckets.data</code>池中。一个rgw对象包含一个或者多个rados对象.</p>
-<p><img src="/./RGW%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E7%BD%91%E5%85%B3%E5%AD%A6%E4%B9%A01%EF%BC%9A%E6%95%B0%E6%8D%AE%E7%BB%84%E7%BB%87%E4%B8%8E%E5%AD%98%E5%82%A8/%E5%A4%8D%E5%88%B6%E4%B8%8E%E5%85%B1%E8%AF%86.jpg" alt="共识和复制对比"></p>
+<p><img src="/2023/04/10/RGW%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E7%BD%91%E5%85%B3%E5%AD%A6%E4%B9%A01%EF%BC%9A%E6%95%B0%E6%8D%AE%E7%BB%84%E7%BB%87%E4%B8%8E%E5%AD%98%E5%82%A8/%E5%A4%8D%E5%88%B6%E4%B8%8E%E5%85%B1%E8%AF%86.jpg" alt="共识和复制对比"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/04/10/RGW%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E7%BD%91%E5%85%B3%E5%AD%A6%E4%B9%A01%EF%BC%9A%E6%95%B0%E6%8D%AE%E7%BB%84%E7%BB%87%E4%B8%8E%E5%AD%98%E5%82%A8/" data-id="clibiaczi0000p0xv2dn7c34y" data-title="RGW对象存储网关学习1：数据组织与存储" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2023/04/10/RGW%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E7%BD%91%E5%85%B3%E5%AD%A6%E4%B9%A01%EF%BC%9A%E6%95%B0%E6%8D%AE%E7%BB%84%E7%BB%87%E4%B8%8E%E5%AD%98%E5%82%A8/" data-id="clibiiay20000tcxvexi164re" data-title="RGW对象存储网关学习1：数据组织与存储" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
